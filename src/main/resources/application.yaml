@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: firstTgBot
+  datasource:
+    schema: app
+    url: jdbc:postgresql://localhost:5432/telegram_bot
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties.hibernate:
+      format_sql: true
+      show_sql: true
+      default_schema: app
+  liquibase:
+    liquibase-schema: app
+#    default-schema: app  что тут что выше одинаково
+  ai:
+    openai:
+      api-key: ${OPENROUTER_TOKEN}
+      base-url: https://openrouter.ai/api
+      chat:
+        options:
+          model: tngtech/deepseek-r1t2-chimera:free # Example model
+telegram:
+  bot:
+    username: ${TELEGRAM_BOT_USERNAME}
+    token: ${TELEGRAM_BOT_TOKEN}
+    webhook-path: /webhook
+
+
+api:
+  weather:
+    url: https://api.weatherapi.com/v1/current.json
+    q: Минск
+    token: a08cc747041e467582e171257251408
+    lang: ru

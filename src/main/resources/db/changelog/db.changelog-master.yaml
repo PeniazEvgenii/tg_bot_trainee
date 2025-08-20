@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/001_create_chat_state.sql
+  - include:
+      file: db/changelog/changes/002_create_user_profile.sql
+  - include:
+      file: db/changelog/changes/003_create_message_log.sql
+  - include:
+      file: db/changelog/changes/004_add_schema_message_log.sql
+  - include:
+      file: db/changelog/changes/005_add_memory.sql
