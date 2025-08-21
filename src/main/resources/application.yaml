@@ -28,12 +28,19 @@ telegram:
   bot:
     username: ${TELEGRAM_BOT_USERNAME}
     token: ${TELEGRAM_BOT_TOKEN}
-    webhook-path: /webhook
+    mode: webhook  # <-- тут переключаем режим: polling | webhook
+
+    webhook:
+      external-url: ${WEBHOOK_EXTERNAL_URL}  # публичный https (ngrok/домен)
+      path: /tg/webhook                      # относительный путь контроллера
+      secret-token: ${WEBHOOK_SECRET:dev-secret}
+      allowed-updates: message,callback_query,my_chat_member
+      webhook-path: /webhook
 
 
 api:
   weather:
     url: https://api.weatherapi.com/v1/current.json
-    q: Минск
-    token: a08cc747041e467582e171257251408
+    q: Minsk
+    token: aef8e054767d406aa97175410252008
     lang: ru

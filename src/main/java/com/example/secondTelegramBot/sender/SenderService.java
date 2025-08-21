@@ -3,9 +3,9 @@ package com.example.secondTelegramBot.sender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+
+import org.telegram.telegrambots.meta.api.methods.botapimethods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
@@ -15,6 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.generics.TelegramClient;
 
 import java.io.File;
 import java.io.InputStream;
@@ -24,16 +25,14 @@ import java.util.List;
 @Service
 public class SenderService {
 
-    private TelegramLongPollingBot bot;
+    private final TelegramClient telegramClient;
     private final TelegramMessageSplitter messageSplitter;
 
-    public SenderService(TelegramMessageSplitter messageSplitter) {
+    public SenderService(TelegramClient telegramClient, TelegramMessageSplitter messageSplitter) {
+        this.telegramClient = telegramClient;
         this.messageSplitter = messageSplitter;
     }
 
-    public void setBot(TelegramLongPollingBot bot) {
-        this.bot = bot;
-    }
 
     public void sendMessage(Long chatId, String text) {
         if (!isBotReady("sendText")) return;
@@ -205,7 +204,7 @@ public class SenderService {
 
     private void executeSendMessage(SendMessage msg) {
         try {
-            bot.execute(msg); // SendMessage implements BotApiMethod<?>
+            telegramClient.execute(msg); // SendMessage implements BotApiMethod<?>
         } catch (TelegramApiException e) {
             log.error("Failed to send message to {}: {}", msg.getChatId(), e.getMessage(), e);
         } catch (Throwable t) {
@@ -215,7 +214,7 @@ public class SenderService {
 
     private void executeSendPhoto(SendPhoto photo) {
         try {
-            bot.execute(photo); // конкретная перегрузка для SendPhoto
+            telegramClient.execute(photo); // конкретная перегрузка для SendPhoto
         } catch (TelegramApiException e) {
             log.error("Failed to send photo to {}: {}", photo.getChatId(), e.getMessage(), e);
         } catch (Throwable t) {
@@ -229,7 +228,7 @@ public class SenderService {
      */
     public void executeGeneric(BotApiMethod<?> method) {
         try {
-            bot.execute(method);
+            telegramClient.execute(method);
         } catch (TelegramApiException e) {
             log.error("Failed to execute method {}: {}", method.getMethod(), e.getMessage(), e);
         } catch (Throwable t) {
@@ -240,7 +239,7 @@ public class SenderService {
 
     private void executeSendDocument(SendDocument doc) {
         try {
-            bot.execute(doc); // конкретная перегрузка для SendDocument
+            telegramClient.execute(doc); // конкретная перегрузка для SendDocument
         } catch (TelegramApiException e) {
             log.error("Failed to send document to {}: {}", doc.getChatId(), e.getMessage(), e);
         } catch (Throwable t) {
@@ -252,8 +251,8 @@ public class SenderService {
        Вспомогательное
        ----------------------- */
 
-    private boolean isBotReady(String action) {
-        if (bot == null) {
+    private boolean isBotReady(String action) {      // удалить
+        if (telegramClient == null) {
             log.warn("Bot not set yet. Can't perform action: {}", action);
             return false;
         }

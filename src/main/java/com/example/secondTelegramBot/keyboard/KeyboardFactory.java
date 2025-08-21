@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardRow;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
@@ -52,14 +53,14 @@ public class KeyboardFactory {
                 .text("♻️ Обновить меню")
                 .build();
 
+        InlineKeyboardRow row1 = new InlineKeyboardRow(List.of(time, weather));
+        InlineKeyboardRow row2 = new InlineKeyboardRow(List.of(ai));
+        InlineKeyboardRow row3 = new InlineKeyboardRow(List.of(survey));
+        InlineKeyboardRow row4 = new InlineKeyboardRow(List.of(echo));
+        InlineKeyboardRow row5 = new InlineKeyboardRow(List.of(refreshMenu));
+
         return InlineKeyboardMarkup.builder()
-                .keyboard(List.of(
-                        List.of(time, weather),
-                        List.of(ai),
-                        List.of(survey),
-                        List.of(echo),
-                        List.of(refreshMenu)
-                ))
+                .keyboard(List.of(row1, row2, row3, row4, row5))
                 .build();
     }
 
@@ -122,10 +123,21 @@ public class KeyboardFactory {
                 List.of(refreshMenu)
         ));
 
+        InlineKeyboardRow row1 = new InlineKeyboardRow(List.of(time, weather));
+        InlineKeyboardRow row2 = new InlineKeyboardRow(List.of(ai));
+        InlineKeyboardRow row3 = new InlineKeyboardRow(List.of(survey));
+        InlineKeyboardRow row4 = new InlineKeyboardRow(List.of(echo));
+        InlineKeyboardRow row5 = new InlineKeyboardRow(List.of(refreshMenu));
+
+        List<InlineKeyboardRow> lists2 = new ArrayList<>(List.of(
+                row1, row2, row3, row4, row5
+        ));
+
         Collections.shuffle(lists);
+        Collections.shuffle(lists2);
 
         return InlineKeyboardMarkup.builder()
-                .keyboard(lists)
+                .keyboard(lists2)
                 .build();
     }
 

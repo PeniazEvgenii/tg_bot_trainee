@@ -11,8 +11,8 @@ import com.example.secondTelegramBot.storage.UserDataCache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.message.Message;
 
 import java.util.HashSet;
 import java.util.Set;
