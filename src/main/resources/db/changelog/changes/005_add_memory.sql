@@ -1,4 +1,4 @@
---liquibase formatted sql
+--liquibase formatted 001_database.sql
 
 --changeset bot:005memory-log
 CREATE TABLE SPRING_AI_CHAT_MEMORY (

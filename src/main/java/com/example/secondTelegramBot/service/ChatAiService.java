@@ -8,6 +8,7 @@ import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.content.Media;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +31,6 @@ public class ChatAiService {
     }
 
     public String processOneMessage(String userMessage) {
-
         return chatClient.prompt("Ты — полезный ассистент")
                 .user(userMessage)
                 .call()

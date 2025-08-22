@@ -1,0 +1,40 @@
+name: telegram-bot
+
+services:
+  telegram-db:
+    build: postgres
+    image: postgresql-bot:1.0.0
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    networks:
+      - telegram-network
+    volumes:
+      - db-data1:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  bot:
+    build: .
+    image: telegram-bot:1.0.3
+    depends_on:
+      - telegram-db
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: webhook
+      SPRING_DATASOURCE_URL: jdbc:postgresql://telegram-db:5432/telegram_bot
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TELEGRAM_BOT_USERNAME: ${TELEGRAM_BOT_USERNAME}
+      WEBHOOK_EXTERNAL_URL: ${WEBHOOK_EXTERNAL_URL}
+#      WEBHOOK_SECRET: ${WEBHOOK_SECRET}
+    networks:
+      - telegram-network
+networks:
+  telegram-network:
+
+volumes:
+  db-data1:

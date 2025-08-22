@@ -1,4 +1,4 @@
---liquibase formatted sql
+--liquibase formatted 001_database.sql
 
 --changeset mentor:001
 CREATE TABLE app.chat_state (

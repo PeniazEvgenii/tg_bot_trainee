@@ -1,4 +1,4 @@
---liquibase formatted sql
+--liquibase formatted 001_database.sql
 
 --changeset bot:05-create-message-log
 CREATE TABLE IF NOT EXISTS message_log (

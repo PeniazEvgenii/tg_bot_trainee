@@ -17,6 +17,8 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Order(3)
@@ -50,12 +52,12 @@ public class MenuCallbackHandler implements IUpdateHandler {
         switch (data) {
             case "TIME_NOW" -> {
                 String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
+                String zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Minsk")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));;
                 // можно показать notification (toast)
                 senderService.answerCallback(callbackQueryId, "Время обновлено ✅", false);
 
                 // редактируем сообщение с меню (оставим кнопки)
-                senderService.editMessage(chatId, messageId, "⏰ Сейчас: " + time, KeyboardFactory.mainInlineMenu());
+                senderService.editMessage(chatId, messageId, "⏰ Сейчас: " + zonedDateTime, KeyboardFactory.mainInlineMenu());
             }
             case "SURVEY" -> {
                 // переходим в состояние "опрос"
