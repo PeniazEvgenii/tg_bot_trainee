@@ -5,8 +5,6 @@ import com.example.secondTelegramBot.dispatcher.UpdateDispatcher;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.longpolling.BotSession;
-import org.telegram.telegrambots.longpolling.util.TelegramOkHttpClientFactory;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
@@ -19,7 +17,6 @@ import java.util.List;
 public class MyTelegramBot {
     private final BotConfiguration botConfiguration;
     private final UpdateDispatcher dispatcher;
-    private BotSession session;
 
     public MyTelegramBot(BotConfiguration botConfiguration, UpdateDispatcher dispatcher) {
 

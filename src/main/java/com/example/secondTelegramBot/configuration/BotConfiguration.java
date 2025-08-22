@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "telegram.bot")
-public record BotConfiguration(String username, String token, WebhookProps webhook) {
+public record BotConfiguration(String username, String token, WebhookProps webhook, String mode) {
 
     @Data
     @AllArgsConstructor

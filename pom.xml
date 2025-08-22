@@ -11,7 +11,7 @@
     <groupId>com.example</groupId>
     <artifactId>secondTgBot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>firstTgBot</name>
+    <name>webhookTgBot</name>
     <description>Spring Boot project</description>
     <url/>
     <licenses>
@@ -89,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>org.telegram</groupId>
-            <artifactId>telegrambots-springboot-longpolling-starter</artifactId>
+            <artifactId>telegrambots-springboot-webhook-starter</artifactId>
             <version>9.0.0</version>
         </dependency>
 
