@@ -1,9 +1,11 @@
+server:
+  port: ${PORT:8080}
 spring:
   application:
     name: firstTgBot
   datasource:
     schema: app
-    url: jdbc:postgresql://localhost:5432/telegram_bot
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/telegram_bot}
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -31,12 +33,11 @@ telegram:
     mode: webhook  # <-- тут переключаем режим: polling | webhook
 
     webhook:
-      external-url: ${WEBHOOK_EXTERNAL_URL:https://cirg7s-37-215-1-188.ru.tuna.am}  # публичный https (ngrok/домен)
+      external-url: ${WEBHOOK_EXTERNAL_URL:https://a6khgc-37-215-37-254.ru.tuna.am}  # публичный https (ngrok/домен)
       path: /tg/webhook                      # относительный путь контроллера
       secret-token: ${WEBHOOK_SECRET:dev-secret}
       allowed-updates: message,callback_query,my_chat_member
       webhook-path: tg/webhook
-
 
 api:
   weather:
