@@ -3,9 +3,9 @@ spring:
     name: firstTgBot
   datasource:
     schema: app
-    url: jdbc:postgresql://localhost:5432/telegram_bot
-    username: postgres
-    password: root
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/telegram_bot}
+    username: ${PGUSER:postgres}
+    password: ${PGPASSWORD:root}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
