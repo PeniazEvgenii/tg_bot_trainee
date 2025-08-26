@@ -51,27 +51,7 @@ public class MenuMessageHandler implements IUpdateHandler {
 
         log.info("Пользователь{}, написал: {}", userDataCache.getUserName(chatId), text);
 
-        // 1) FSM: ждём имя
-       // if (stateService.get(chatId).state() == BotState.WAITING_FOR_NAME) {
-//        if (!menus.contains(text) && chatStateService.getState(chatId) == BotState.WAITING_FOR_NAME) {
-//            String name = text.trim();
-//            chatStateService.clearState(chatId);
-//            stateService.reset(chatId);
-//
-//            // здесь могли бы сохранить имя в БД (урок 5)
-//            userDataCache.saveUsername(chatId, name);
-//
-//            senderService.sendMessage(chatId, "Отлично, " + name + "! 👋");
-//            senderService.sendMessage(chatId, "Что дальше?", KeyboardFactory.mainInlineMenu());
-//            return;
-//        }
-//
-//        // 1) FSM: ждём выход из режима мода
-//       // if(stateService.get(chatId).state() == BotState.ECHO_MODE && !text.equalsIgnoreCase("Выход из режима")) {
-//        if(!menus.contains(text) && chatStateService.getState(chatId) == BotState.ECHO_MODE && !text.equalsIgnoreCase("Выход из режима")) {
-//            senderService.sendMessage(chatId, text.toUpperCase(), KeyboardFactory.exitFromMode());
-//            return;
-//        }
+        // 1) FSM: ждём имя. Обработка сообщение с состоянием перенес в отдельный хендлер
 
         // 2) Обработка reply-кнопок (быстрые действия)
         switch (text) {
