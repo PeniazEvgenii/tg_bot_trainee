@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.message.Message;
 
 import java.util.List;
 import java.util.Map;
@@ -58,9 +59,15 @@ public class UpdateDispatcher {
             return EHandlerType.COMMAND;
         } else if(update.hasCallbackQuery()) {
             return EHandlerType.CALLBACK;
+        } else if(update.hasMessage() && hasMedia(update.getMessage())) {
+            return EHandlerType.MEDIA;
         } else if(update.hasMessage()) {
             return EHandlerType.MESSAGE;
         }
         return EHandlerType.OTHER;
+    }
+
+    private boolean hasMedia(Message message) {
+        return message.hasAudio() || message.hasDocument() || message.hasPhoto() || message.hasVoice();
     }
 }

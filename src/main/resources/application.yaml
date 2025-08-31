@@ -45,3 +45,12 @@ api:
     q: Minsk
     token: aef8e054767d406aa97175410252008
     lang: ru
+
+app:
+  s3:
+    bucket: ${S3_BUCKET:bot-media}
+    endpoint: ${S3_ENDPOINT:http://localhost:9000}
+    region: ${AWS_REGION:us-east-1}
+    path-style-access: true
+    aws-access-key-id: ${AWS_ACCESS_KEY_ID}
+    aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}

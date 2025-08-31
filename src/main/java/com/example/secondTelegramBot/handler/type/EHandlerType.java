@@ -5,5 +5,6 @@ public enum EHandlerType {
     CALLBACK,
     STATE,
     MESSAGE,
+    MEDIA,
     OTHER
 }
