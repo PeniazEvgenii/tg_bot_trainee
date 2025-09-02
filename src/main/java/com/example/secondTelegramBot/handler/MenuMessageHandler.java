@@ -5,16 +5,20 @@ import com.example.secondTelegramBot.handler.type.EHandlerType;
 import com.example.secondTelegramBot.keyboard.KeyboardFactory;
 import com.example.secondTelegramBot.sender.SenderService;
 import com.example.secondTelegramBot.service.ChatStateService;
+import com.example.secondTelegramBot.service.RateLimiterService;
 import com.example.secondTelegramBot.state.BotState;
 import com.example.secondTelegramBot.state.StateService;
 import com.example.secondTelegramBot.storage.UserDataCache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.message.Message;
 
 import java.util.HashSet;
+import java.util.OptionalLong;
 import java.util.Set;
 
 /**
@@ -31,6 +35,7 @@ public class MenuMessageHandler implements IUpdateHandler {
     private final StateService stateService;
     private final UserDataCache userDataCache;
     private final ChatStateService chatStateService;
+    private final RateLimiterService rateLimiter;
 
     @Override
     public EHandlerType getType() {
@@ -48,6 +53,16 @@ public class MenuMessageHandler implements IUpdateHandler {
         Message message = update.getMessage();
         Long chatId = message.getChatId();
         String text = message.getText();
+
+        // проверка количества запросов от пользователей
+        if (!rateLimiter.tryConsume(update.getMessage().getChatId())) {
+
+            OptionalLong waitSecond = rateLimiter.tryConsumeWithWaitSeconds(update.getMessage().getChatId());
+           // senderService.sendMessage(update.getMessage().getChatId(), "Too many requests, попробуйте позже.");
+            senderService.sendMessage(update.getMessage().getChatId(), "Too many requests, можно отправить запрос через [" + waitSecond.getAsLong() + "] секунд");
+
+            return;
+        }
 
         log.info("Пользователь{}, написал: {}", userDataCache.getUserName(chatId), text);
 

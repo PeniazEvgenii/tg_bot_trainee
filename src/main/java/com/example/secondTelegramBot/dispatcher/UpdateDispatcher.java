@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class UpdateDispatcher {
     private final Map<EHandlerType, List<IUpdateHandler>> handlers;
     private final MessageLogService logService;
+
     public UpdateDispatcher(List<IUpdateHandler> listHandler, MessageLogService logService) {
         this.handlers = listHandler.stream()
                 .sorted(AnnotationAwareOrderComparator.INSTANCE)
